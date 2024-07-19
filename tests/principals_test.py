@@ -1,5 +1,7 @@
 from core.models.assignments import AssignmentStateEnum, GradeEnum
-
+import pytest
+from flask import current_app
+from app import create_app, db
 
 def test_get_assignments(client, h_principal):
     response = client.get(
@@ -68,3 +70,33 @@ def test_principal_can_grade_assignment(client, principal_headers):
     assert data['id'] == 1
     assert data['grade'] == 'A'
     assert data['state'] == 'GRADED'
+
+
+
+@pytest.fixture
+def principal_headers():
+    return {'Authorization': 'Bearer principal_token'}
+
+class PrincipalsTestCase:
+    @classmethod
+    def setUpClass(cls):
+        cls.app = create_app('testing')
+        cls.client = cls.app.test_client()
+        cls.app_context = cls.app.app_context()
+        cls.app_context.push()
+        db.create_all()
+
+    @classmethod
+    def tearDownClass(cls):
+        db.session.remove()
+        db.drop_all()
+        cls.app_context.pop()
+
+    def test_get_assignments(self, principal_headers):
+        response = self.client.get('/api/principal/assignments', headers=principal_headers)
+        assert response.status_code == 200
+
+    def test_grade_assignment_draft_assignment(self):
+        assignment_id = 1
+        response = self.client.post('/api/principal/assignments/grade', json={'id': assignment_id, 'grade': 'A'})
+        assert response.status_code == 200
