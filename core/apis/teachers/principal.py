@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify
 from core.models import users
-from core.auth import authenticate_principal
+
 
 principal_blueprint = Blueprint('principal', __name__)
 

@@ -1,6 +1,5 @@
 from flask import Blueprint, jsonify, request
 from core.models import assignments
-from core.auth import authenticate_principal
 from core import db
 
 principal_blueprint = Blueprint('principal', __name__)
