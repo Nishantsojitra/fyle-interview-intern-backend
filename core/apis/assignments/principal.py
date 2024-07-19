@@ -2,6 +2,7 @@ from flask import Blueprint, request, jsonify
 from core.models.assignments import Assignment
 from core.libs.exceptions import AssignmentNotFoundException
 from core.libs.helpers import validate_principal
+from core.libs.exceptions import AssignmentNotFoundException
 
 assignment_blueprint = Blueprint('assignment_blueprint', __name__)
 

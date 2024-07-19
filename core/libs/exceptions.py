@@ -10,3 +10,8 @@ class FyleError(Exception):
         res = dict()
         res['message'] = self.message
         return res
+        
+class AssignmentNotFoundException(Exception):
+    def __init__(self, message="Assignment not found"):
+        self.message = message
+        super().__init__(self.message)        
