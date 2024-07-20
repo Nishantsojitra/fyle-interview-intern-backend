@@ -8,7 +8,6 @@ principal_blueprint = Blueprint('principal_blueprint', __name__)
 
 @principal_blueprint.route('/principal/assignments', methods=['GET'])
 def get_principal_assignments():
-    validate_principal()
     
     # Fetch all assignments with state 'SUBMITTED' or 'GRADED'
     assignments = Assignment.query.filter(Assignment.state.in_(['SUBMITTED', 'GRADED'])).all()
@@ -20,7 +19,6 @@ def get_principal_assignments():
 
 @assignment_blueprint.route('/principal/assignments/grade', methods=['POST'])
 def grade_assignment_by_principal():
-    validate_principal()
     data = request.get_json()
     
     assignment_id = data.get('id')
