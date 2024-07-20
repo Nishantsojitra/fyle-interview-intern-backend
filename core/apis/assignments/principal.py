@@ -5,6 +5,7 @@ from core.libs.helpers import validate_principal
 from core.libs.exceptions import AssignmentNotFoundException
 
 assignment_blueprint = Blueprint('assignment_blueprint', __name__)
+principal_blueprint = Blueprint('principal_blueprint', __name__)
 
 @principal_blueprint.route('/principal/assignments', methods=['GET'])
 def get_principal_assignments():
